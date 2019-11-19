@@ -1,6 +1,5 @@
 package com.k.list;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 /**
