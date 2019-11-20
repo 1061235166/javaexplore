@@ -1,9 +1,11 @@
 package com.k.hash;
 
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultimap;
+import org.apache.commons.collections4.bag.HashBag;
+
+import java.util.*;
 
 /**
  * Created by k on 2019/11/17.
@@ -11,9 +13,7 @@ import java.util.Map;
 public class MapView {
 
     public static void main(String[] args) {
-		idMap();
-        hashMap();
-		linkedhashmap();
+		hashBag();
     }
 
     static void idMap(){
@@ -51,5 +51,46 @@ public class MapView {
 		for(String key:map.keySet()){
 			System.out.println(key);
 		}
+	}
+
+	static void weakHashMap(){
+		WeakHashMap<Integer,String> map=new WeakHashMap<>();
+
+		map.put(new Integer(1),"123");
+		System.out.println(map);
+		System.gc();
+		//gc后map被清空
+		System.out.println(map);
+	}
+
+	static void bimap(){
+		BiMap<String,Integer> map = HashBiMap.create();
+		map.put("11",111);
+		map.put("22",222);
+		map.put("33",333);
+		map.put("44",444);
+		System.out.println(map);
+		//key和value倒转
+		BiMap<Integer, String> inverse = map.inverse();
+		System.out.println(inverse);
+	}
+
+	static void multimap(){
+		HashMultimap<String, String> multimap = HashMultimap.create();
+		multimap.put("key","value1");
+		multimap.put("key","value2");
+		multimap.put("key","value3");
+		System.out.println(multimap);
+		Set<String> key = multimap.get("key");
+		System.out.println(key);
+	}
+
+	static void hashBag(){
+		HashBag<String>bag = new HashBag<>();
+		bag.add("1");
+		bag.add("1");
+		bag.add("2",3);
+		System.out.println(bag.getCount("2"));
+		System.out.println(bag.getCount("1"));
 	}
 }
